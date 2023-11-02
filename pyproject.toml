@@ -6,7 +6,7 @@ authors = ["Mikhail Ivanov <m.ivanov0427@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 pyrogram = "^2.0.106"
 tgcrypto = "^1.2.5"
 rapidfuzz = "^3.4.0"

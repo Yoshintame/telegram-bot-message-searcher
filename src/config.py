@@ -3,6 +3,7 @@ from typing import List
 
 import yaml
 from pydantic import BaseModel
+from src.consts import CONFIG_PATH
 
 
 class GroupSchema(BaseModel):
@@ -14,6 +15,7 @@ class GroupSchema(BaseModel):
 class ConfigSchema(BaseModel):
     api_id: int
     api_hash: str
+    phone_number: str
     forward_tos: List[str | int]
     groups: List[GroupSchema]
 
@@ -49,5 +51,5 @@ def parse_config(config_file, config_model):
     return config
 
 
-config = parse_config("config.yaml", ConfigSchema)
+config = parse_config(CONFIG_PATH, ConfigSchema)
 config = prepare_config_keywords(config)
