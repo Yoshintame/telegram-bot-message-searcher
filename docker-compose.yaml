@@ -1,0 +1,6 @@
+version: '3'
+services:
+  telegram-bot-message-searcher:
+    build:
+      context: .
+      dockerfile: dockerfile
