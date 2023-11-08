@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import List, Optional
 
 import yaml
 from pydantic import BaseModel
@@ -18,6 +18,7 @@ class ConfigSchema(BaseModel):
     phone_number: str
     forward_tos: List[str | int]
     groups: List[GroupSchema]
+    session_string: Optional[str] = None
 
 
 def prepare_config_keywords(config):
