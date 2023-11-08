@@ -8,6 +8,14 @@ from src.utils.utils import get_message_link
 from functools import partial
 
 
+async def get_info(client, message, group):
+    chat_id = message.chat.id
+    keywords_string = '\n'.join(group.keywords)
+    tos_string = '\n'.join(group.forward_tos)
+    from_string = '\n'.join(group.chats)
+    await client.send_message(chat_id, f"Ключевые слова:\n{keywords_string}\n\nПересылаю в:\n{tos_string}\n\nИщу в:\n{from_string}")
+
+
 async def send_message_link(client, message, group):
     matched_word = bare_check_text_for_keywords(message.text, group.keywords)
 
@@ -21,3 +29,6 @@ def generate_chat_group_handlers(app):
         message_handler = MessageHandler(partial_send_message_link, filters.chat(group.chats) & filters.text & bare_check_message_for_keywords(group.keywords))
         app.add_handler(message_handler)
 
+        partial_get_info = partial(get_info, group=group)
+        message_handler = MessageHandler(partial_get_info, filters.chat(group.forward_tos) & filters.command(["info", "help"]))
+        app.add_handler(message_handler)
