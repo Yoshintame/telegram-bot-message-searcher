@@ -9,6 +9,7 @@ from src.consts import CONFIG_PATH
 class GroupSchema(BaseModel):
     name: str
     chats: List[str | int]
+    forward_tos: List[str | int]
     keywords: List[str]
 
 
@@ -16,7 +17,6 @@ class ConfigSchema(BaseModel):
     api_id: int
     api_hash: str
     phone_number: str
-    forward_tos: List[str | int]
     groups: List[GroupSchema]
     session_string: Optional[str] = None
 

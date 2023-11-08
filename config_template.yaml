@@ -1,9 +1,9 @@
 api_id: api-aplication-id
 api_hash: api-aplication-hash
-forward_tos:
-  - "@username"
 groups:
   - name: "Group of chats 1"
+    forward_tos:
+      - "@username0"
     chats:
       - "@username1"
       - "@username2"
@@ -11,7 +11,10 @@ groups:
       - keyword-1
       - keyword-2
   - name: "Group of chats 2"
+    forward_tos:
+      - "@username4"
     chats:
+      - "@username4"
       - "@username1"
       - "@username3"
     keywords:
