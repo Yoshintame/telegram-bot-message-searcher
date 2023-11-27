@@ -12,6 +12,9 @@ def token():
 def bot():
     init_bot()
 
-if __name__ == "__main__":
+def main():
     pprint(config)
     bot()
+
+if __name__ == "__main__":
+    main()
