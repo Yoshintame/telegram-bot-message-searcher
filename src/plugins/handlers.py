@@ -3,7 +3,7 @@ from pyrogram.handlers import MessageHandler
 
 from src.config import config
 from src.utils.fuzzy_filters import bare_check_text_for_keywords
-from src.filters.message_text_filters import bare_check_message_for_keywords, check_message_for_emojis_amount
+from src.filters.message_text_filters import bare_check_message_for_keywords, check_message_for_emojis_amount, check_message_text_lenght
 from src.utils.utils import get_message_link
 from functools import partial
 
@@ -31,6 +31,7 @@ def generate_chat_group_handlers(app):
             filters.chat(group.chats) &
             filters.text &
             check_message_for_emojis_amount(2) &
+            check_message_text_lenght(500) &
             bare_check_message_for_keywords(group.keywords))
         app.add_handler(message_handler)
 

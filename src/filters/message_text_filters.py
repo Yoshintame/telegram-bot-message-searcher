@@ -39,6 +39,16 @@ def check_message_for_emojis_amount(data):
     return filters.create(func, data=data)
 
 
+def check_message_text_lenght(data):
+    async def func(flt, _, query):
+        text_message_leght = len(str(query.text))
+
+        logger.info(f"Text lenght: {text_message_leght} {query.chat.username} \n {query.text}")
+        return text_message_leght < flt.data
+
+    return filters.create(func, data=data)
+
+
 def count_amout_of_emojis(text):
     emoji_counter = emoji.emoji_count(text)
 
