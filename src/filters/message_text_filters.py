@@ -31,6 +31,8 @@ def bare_check_message_for_keywords(data):
 
 def check_message_for_emojis_amount(data):
     async def func(flt, _, query):
+        if flt.data is None:
+            return True
         emojis_ammout = count_amout_of_emojis(str(query.text))
 
         logger.info(f"Emojis: {emojis_ammout} {query.chat.username} \n {query.text}")
@@ -41,6 +43,9 @@ def check_message_for_emojis_amount(data):
 
 def check_message_text_lenght(data):
     async def func(flt, _, query):
+        if flt.data is None:
+            return True
+
         text_message_leght = len(str(query.text))
 
         logger.info(f"Text lenght: {text_message_leght} {query.chat.username} \n {query.text}")

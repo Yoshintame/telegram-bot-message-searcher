@@ -30,8 +30,8 @@ def generate_chat_group_handlers(app):
             partial_send_message_link,
             filters.chat(group.chats) &
             filters.text &
-            check_message_for_emojis_amount(2) &
-            check_message_text_lenght(500) &
+            check_message_for_emojis_amount(group.max_emoji_amount) &
+            check_message_text_lenght(group.max_text_lenght) &
             bare_check_message_for_keywords(group.keywords))
         app.add_handler(message_handler)
 

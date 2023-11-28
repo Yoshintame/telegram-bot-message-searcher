@@ -11,6 +11,8 @@ class GroupSchema(BaseModel):
     chats: List[str | int]
     forward_tos: List[str | int]
     keywords: List[str]
+    max_text_lenght: Optional[int] = None
+    max_emoji_amount: Optional[int] = None
 
 
 class ConfigSchema(BaseModel):
