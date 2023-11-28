@@ -20,10 +20,26 @@ def fuzzy_check_message_for_keywords(data):
 
 def bare_check_message_for_keywords(data):
     async def func(flt, _, query):
-        keywords = flt.data
+
+
+        if flt.data["keywords"] is None:
+            return True
+        keywords = flt.data["keywords"]
+
+        inverted = False
+        if flt.data["inverted"] is not None:
+            inverted = flt.data["inverted"]
+
+        print(inverted)
+        print(keywords)
         is_pass = bare_check_text_for_keywords(query.text, keywords)
+        print(is_pass)
+
+        is_pass = not bool(is_pass) if inverted else bool(is_pass)
+        print(is_pass)
 
         logger.info(f"Keywords: {is_pass} {query.chat.username} \n {query.text}")
+
         return is_pass
 
     return filters.create(func, data=data)

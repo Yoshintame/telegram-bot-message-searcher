@@ -10,14 +10,17 @@ from functools import partial
 
 async def get_info(client, message, group):
     chat_id = message.chat.id
-    keywords_string = '\n'.join(group.keywords)
+    keywords_whitelist_string = '\n'.join(group.keywords_whitelist)
+    keywords_blacklist_string = '\n'.join(group.keywords_blacklist)
+    max_text_lenght = group.max_text_lenght
+    max_emoji_amount = group.max_emoji_amount
     tos_string = '\n'.join(group.forward_tos)
     from_string = '\n'.join(group.chats)
-    await client.send_message(chat_id, f"Ключевые слова:\n{keywords_string}\n\nПересылаю в:\n{tos_string}\n\nИщу в:\n{from_string}")
+    await client.send_message(chat_id, f"Вайтлист ключевые слова:\n{keywords_whitelist_string}\n\nБлэклист ключевые слова:\n{keywords_blacklist_string}\n\nМаксимальное количество символов:\n{max_text_lenght}\n\nМаксимальное количество эмодзи:\n{max_emoji_amount}\n\nПересылаю в:\n{tos_string}\n\nИщу в:\n{from_string}")
 
 
 async def send_message_link(client, message, group):
-    matched_word = bare_check_text_for_keywords(message.text, group.keywords)
+    matched_word = bare_check_text_for_keywords(message.text, group.keywords_whitelist)
 
     for chat in group.forward_tos:
         await client.send_message(chat, f"Ключевое слово: {matched_word} \n {get_message_link(message)}")
@@ -32,7 +35,8 @@ def generate_chat_group_handlers(app):
             filters.text &
             check_message_for_emojis_amount(group.max_emoji_amount) &
             check_message_text_lenght(group.max_text_lenght) &
-            bare_check_message_for_keywords(group.keywords))
+            bare_check_message_for_keywords({"keywords": group.keywords_blacklist, "inverted": True}) &
+            bare_check_message_for_keywords({"keywords": group.keywords_whitelist, "inverted": False}))
         app.add_handler(message_handler)
 
         partial_get_info = partial(get_info, group=group)
